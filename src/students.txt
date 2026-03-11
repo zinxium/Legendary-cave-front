@@ -1,0 +1,72 @@
+This unit is finished since 11/07/2025
+Login
+Town
+Graduation year
+Semester
+abiola.fayemi@epitech.eu	Bénin/Cotonou	2027	B6
+afissou.assouma@epitech.eu	Bénin/Cotonou	2027	B6
+am-lake.adechokan@epitech.eu	Bénin/Cotonou	2027	B6
+aneric.boco-assongba@epitech.eu	Bénin/Cotonou	2027	B6
+ange-marie.dossou@epitech.eu	Bénin/Cotonou	2027	B6
+aquilas.hounkanrin@epitech.eu	Bénin/Cotonou	2027	B6
+arthur.hounnankan@epitech.eu	Bénin/Cotonou	2027	B6
+bilal.liadi@epitech.eu	Bénin/Cotonou	2027	B6
+bill.agbokou@epitech.eu	Bénin/Cotonou	2027	B6
+boubacar.boulkassoum@epitech.eu	Bénin/Cotonou	2027	B6
+bovalus.nougbodohoue@epitech.eu	Bénin/Cotonou	2027	B6
+bryan.sambieni@epitech.eu	Bénin/Cotonou	2027	B6
+chardone.amoki@epitech.eu	Bénin/Cotonou	2027	B6
+christ.hounkanrin@epitech.eu	Bénin/Cotonou	2027	B6
+christen.dofonnou@epitech.eu	Bénin/Cotonou	2027	B6
+cynthia.zinsou@epitech.eu	Bénin/Cotonou	2027	B6
+david.gbessemehlan@epitech.eu	Bénin/Cotonou	2027	B6
+espoir.agoli-agbo@epitech.eu	Bénin/Cotonou	2027	B6
+fairouz.amoussa@epitech.eu	Bénin/Cotonou	2027	B6
+faust.troukou@epitech.eu	Bénin/Cotonou	2027	B6
+ferreol.avimadje@epitech.eu	Bénin/Cotonou	2027	B6
+hanniel.degbelo@epitech.eu	Bénin/Cotonou	2027	B6
+harry.fatolou@epitech.eu	Bénin/Cotonou	2027	B6
+hermann.gagnon@epitech.eu	Bénin/Cotonou	2027	B6
+hodavia.bangbola@epitech.eu	Bénin/Cotonou	2027	B6
+horace.kougbla@epitech.eu	Bénin/Cotonou	2027	B6
+houcham.mama-gao@epitech.eu	Bénin/Cotonou	2027	B6
+houefa.tessilimi@epitech.eu	Bénin/Cotonou	2028	B5
+ilham.adios@epitech.eu	Bénin/Cotonou	2027	B6
+jaures.adehossi@epitech.eu	Bénin/Cotonou	2027	B6
+jaures.agossou@epitech.eu	Bénin/Cotonou	2027	B6
+jessica.zomahoun@epitech.eu	Bénin/Cotonou	2027	B6
+jesugnon.gbahoungba@epitech.eu	Bénin/Cotonou	2027	B6
+joel.alawenon@epitech.eu	Bénin/Cotonou	2027	B6
+jordan.da-silva-domingo@epitech.eu	Bénin/Cotonou	2027	B6
+jordy.gnonlonfoun@epitech.eu	Bénin/Cotonou	2027	B6
+jores.da-trinidade@epitech.eu	Bénin/Cotonou	2027	B6
+julia.goudalo@epitech.eu	Bénin/Cotonou	2027	B6
+jupiter.adjahoungbeta@epitech.eu	Bénin/Cotonou	2027	B6
+kafui.hounkpatin@epitech.eu	Bénin/Cotonou	2027	B6
+katia.elegbe@epitech.eu	Bénin/Cotonou	2027	B6
+lois.adonon@epitech.eu	Bénin/Cotonou	2027	B6
+maessarath.mama@epitech.eu	Bénin/Cotonou	2027	B6
+michkath1.aboudou@epitech.eu	Bénin/Cotonou	2027	B6
+omer.dedo@epitech.eu	Bénin/Cotonou	2027	B6
+ornel.whannou-de-dravo@epitech.eu	Bénin/Cotonou	2027	B6
+owens.aihunzoun@epitech.eu	Bénin/Cotonou	2027	B6
+ramdane.boukary@epitech.eu	Bénin/Cotonou	2027	B6
+rockib.kelani@epitech.eu	Bénin/Cotonou	2027	B6
+ronel.hounkpatin@epitech.eu	Bénin/Cotonou	2027	B6
+roy-ronald.hedihon-kassa@epitech.eu	Bénin/Cotonou	2027	B6
+samuel.soglohoun@epitech.eu	Bénin/Cotonou	2027	B6
+saoban.radji@epitech.eu	Bénin/Cotonou	2027	B6
+sayane.yabi@epitech.eu	Bénin/Cotonou	2027	B6
+schallum.setondji@epitech.eu	Bénin/Cotonou	2027	B6
+seth.djenontin@epitech.eu	Bénin/Cotonou	2027	B6
+shalom.dosseh@epitech.eu	Bénin/Cotonou	2027	B6
+soumaila.idani@epitech.eu	Bénin/Cotonou	2027	B6
+sylvanus.boni@epitech.eu	Bénin/Cotonou	2027	B6
+ted.dossou-koko@epitech.eu	Bénin/Cotonou	2027	B6
+theodoric.akpaca@epitech.eu	Bénin/Cotonou	2027	B6
+wilfred.marcos@epitech.eu	Bénin/Cotonou	2028	B5-Hors Parcours
+yann-meric.sossou@epitech.eu	Bénin/Cotonou	2027	B6
+yoann.dossou-yovo@epitech.eu	Bénin/Cotonou	2027	B6
+youvel.vibou@epitech.eu	Bénin/Cotonou	2027	B6
+65
+yoann.dossou-
