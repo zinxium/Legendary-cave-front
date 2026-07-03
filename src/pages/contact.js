@@ -75,16 +75,6 @@ export default function Contact() {
       <section style={{
         padding:'5rem 2rem 3rem', textAlign:'center', position:'relative',
       }}>
-        <div style={{
-          display:'inline-flex', alignItems:'center', gap:8,
-          background:'rgba(0,50,98,0.3)', border:'1px solid rgba(74,138,191,0.35)',
-          borderRadius:100, padding:'6px 20px', marginBottom:'2rem',
-          fontFamily:"'DM Sans', sans-serif", fontSize:'0.75rem',
-          letterSpacing:'0.04em', color: C.lavender,
-        }}>
-          Restons connectés
-        </div>
-
         <h1 style={{
           fontFamily:"'Cormorant Garamond', serif",
           fontSize:'clamp(3rem, 8vw, 6rem)', fontWeight:700, lineHeight:0.95,
@@ -92,14 +82,6 @@ export default function Contact() {
         }}>
           <span style={{ color: C.amber }}>Contact</span>
         </h1>
-
-        <p style={{
-          fontFamily:"'DM Sans', sans-serif",
-          fontSize:'1.05rem', color:'rgba(255,235,153,0.5)',
-          maxWidth:480, margin:'0 auto', lineHeight:1.7,
-        }}>
-          Une idée, une collaboration, ou simplement envie de reprendre contact ? La Cave est à votre écoute.
-        </p>
       </section>
 
       {/* ── BODY ──────────────────────── */}
@@ -331,31 +313,6 @@ export default function Contact() {
 
         </div>
       </section>
-
-      {/* ── FOOTER BANNER ─────────────── */}
-      <div style={{
-        borderTop:'1px solid rgba(74,138,191,0.1)',
-        padding:'2.5rem 2rem',
-        background:'rgba(0,0,0,0.3)',
-        textAlign:'center',
-      }}>
-        <div style={{
-          fontFamily:"'Cormorant Garamond', serif",
-          fontSize:'clamp(1.5rem, 3vw, 2.2rem)', fontWeight:700,
-          color: C.gold, marginBottom:'0.8rem',
-        }}>
-          Une question ? Une idée ?{' '}
-          <span style={{ fontStyle:'italic', color: C.amber }}>N'hésitez pas.</span>
-        </div>
-        <p style={{
-          fontFamily:"'DM Sans', sans-serif",
-          fontSize:'0.95rem', color:'rgba(255,235,153,0.45)',
-          maxWidth:520, margin:'0 auto',
-          lineHeight:1.7,
-        }}>
-          Anciens camarades, professionnels du secteur, ou simples curieux, la Cave est ouverte a tous ceux qui partagent notre passion.
-        </p>
-      </div>
 
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
