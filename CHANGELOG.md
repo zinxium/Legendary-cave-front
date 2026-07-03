@@ -1,5 +1,24 @@
 # Changelog - Legendary Cave Frontend
 
+## [Version 3.1.0] - 2026-07-03
+
+### Photos de profil alumni
+- AlumniCard et AlumniModal affichent la photo de profil Cloudinary
+- Fallback sur les initiales si aucune photo disponible
+- Photo agrandie (100px) dans le modal avec bordure coloree
+
+### Filtres domaine d'expertise
+- Filtrage bascule sur `specialty` au lieu de `domain` (corrige le filtrage casse par "A venir")
+- Ajout des filtres **UX/UI Design** (violet) et **Mobile Dev** (orange)
+- Couleurs de badges mises a jour pour les 7 specialites
+- Compteur "Domaines" dans les stats corrige
+
+### Description alumni
+- Section description stylisee dans le modal (fond semi-transparent + bordure laterale)
+- Champs "A venir" masques proprement (pas de `@ A venir` affiche)
+
+---
+
 ## [Version 3.0.0] - 2026-07-03
 
 ### Photos dynamiques depuis Cloudinary
