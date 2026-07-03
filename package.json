@@ -1,9 +1,8 @@
 {
-  "name": "legendary-cave",
+  "name": "cave27",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@nestjs/config": "^4.0.2",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.18",
     "@testing-library/dom": "^10.4.1",
