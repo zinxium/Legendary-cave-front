@@ -321,16 +321,6 @@ export default function About() {
       <section style={{
         padding:'5rem 3rem 3rem', textAlign:'center', position:'relative',
       }}>
-        <div style={{
-          display:'inline-flex', alignItems:'center', gap:8,
-          background:'rgba(0,50,98,0.3)', border:'1px solid rgba(74,138,191,0.35)',
-          borderRadius:100, padding:'6px 20px', marginBottom:'2rem',
-          fontFamily:"'DM Sans', sans-serif", fontSize:'0.75rem',
-          color: C.lavender,
-        }}>
-          Promotion 2022 - 2027
-        </div>
-
         <h1 style={{
           fontFamily:"'Cormorant Garamond', serif",
           fontSize:'clamp(3.5rem, 8vw, 6rem)', fontWeight:700, lineHeight:0.95,
@@ -345,14 +335,6 @@ export default function About() {
             color: C.lavender,
           }}>de la Cave</span>
         </h1>
-
-        <p style={{
-          fontFamily:"'DM Sans', sans-serif",
-          fontSize:'1.1rem', color:'rgba(255,235,153,0.55)',
-          maxWidth:520, margin:'0 auto', lineHeight:1.8,
-        }}>
-          L'histoire exceptionnelle d'une promotion qui a marque son epoque et ne fait que commencer.
-        </p>
       </section>
 
       {/* ── STATS ────────────────────────── */}

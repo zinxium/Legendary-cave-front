@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Users, Camera, Heart, Star, ArrowRight } from "lucide-react";
+import { Users, Camera, Star, ArrowRight } from "lucide-react";
 import { C } from '../tokens';
 import { getSouvenirs } from '../services/apiService';
 
@@ -13,7 +13,6 @@ const PREVIEW_LABELS = [
 const STATS = [
   { icon: Users,  value: 63,      suffix: '+', label: 'Etudiants',  accent: C.amber },
   { icon: Camera, value: 100,     suffix: '+', label: 'Photos',     accent: C.lavender },
-  { icon: Heart,  value: '-',     suffix: '',  label: 'Souvenirs',  accent: C.mustard },
   { icon: Star,   value: '2027',  suffix: '',  label: 'Promotion',  accent: C.indigo },
 ];
 
@@ -149,32 +148,14 @@ export default function Homepage() {
             }}>Cave27</span>
           </h1>
 
-          {/* Divider */}
-          <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16,
-            marginBottom: '1.8rem',
-            animation: mounted ? 'fadeSlide 0.9s ease 0.7s both' : 'none',
-          }}>
-            <div style={{ width: 60, height: 1, background: C.amber, opacity: 0.4 }} />
-            <div style={{ width: 60, height: 1, background: C.amber, opacity: 0.4 }} />
-          </div>
-
           {/* Subtitle */}
           <p style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: 'rgba(255,235,153,0.6)',
-            lineHeight: 1.75, marginBottom: '0.6rem',
+            lineHeight: 1.75, marginBottom: '3.5rem',
             animation: mounted ? 'fadeSlide 0.9s ease 0.8s both' : 'none',
           }}>
             Notre parcours étudiant immortalisé en images
-          </p>
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.85rem', letterSpacing: '0.05em',
-            color: C.amber, marginBottom: '3.5rem',
-            animation: mounted ? 'fadeSlide 0.9s ease 0.9s both' : 'none',
-          }}>
-            Souvenirs, Amitie, Challenges
           </p>
 
           {/* CTA */}
@@ -193,16 +174,6 @@ export default function Homepage() {
               transition: 'opacity 0.2s',
             }}>
               Explorer la Galerie <ArrowRight size={14} />
-            </button>
-            <button onClick={() => navigate('/about')} style={{
-              display: 'flex', alignItems: 'center', gap: 10,
-              background: 'transparent',
-              color: C.gold, border: '1px solid rgba(255,235,153,0.25)', cursor: 'pointer',
-              fontFamily: "'DM Sans', sans-serif", fontSize: '0.85rem',
-              padding: '14px 32px', borderRadius: 6,
-              transition: 'opacity 0.2s',
-            }}>
-              En savoir plus
             </button>
           </div>
 
@@ -261,11 +232,6 @@ export default function Homepage() {
         <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative' }}>
           {/* Section header */}
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <div style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: '0.75rem',
-              letterSpacing: '0.05em',
-              color: C.amber, marginBottom: '1.2rem',
-            }}>Un apercu</div>
             <h2 style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 700, lineHeight: 1.0,
@@ -280,18 +246,6 @@ export default function Homepage() {
                 color: C.lavender,
               }}>notre aventure</span>
             </h2>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: '1.05rem', color: 'rgba(255,235,153,0.5)',
-              maxWidth: 540, margin: '0 auto', lineHeight: 1.8,
-            }}>
-              Chaque photo raconte une histoire, chaque moment capture l'essence de notre parcours ensemble.
-            </p>
-
-            <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:16, marginTop:'2rem' }}>
-              <div style={{ width:60, height:1, background: C.amber, opacity: 0.4 }} />
-              <div style={{ width:60, height:1, background: C.amber, opacity: 0.4 }} />
-            </div>
           </div>
 
           {/* Preview grid */}

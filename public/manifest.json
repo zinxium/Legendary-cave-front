@@ -1,27 +1,25 @@
-                                                             
-───────────────────────────────────────────────────────────────
-❯ prepare le commit.txt   {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+{
+  "short_name": "Cave27",
+  "name": "Cave27 — Plateforme Alumni Promotion 2027",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "https://res.cloudinary.com/dnusjylvv/image/upload/w_64,h_64,c_fit/v1783037405/legendary_cave_logo_hwglxo_vm2pjw.png",
+      "sizes": "64x64",
+      "type": "image/png"
     },
     {
-      "src": "logo192.png",
+      "src": "https://res.cloudinary.com/dnusjylvv/image/upload/w_192,h_192,c_fit/v1783037405/legendary_cave_logo_hwglxo_vm2pjw.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "https://res.cloudinary.com/dnusjylvv/image/upload/w_512,h_512,c_fit/v1783037405/legendary_cave_logo_hwglxo_vm2pjw.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#001229",
+  "background_color": "#001229"
 }
