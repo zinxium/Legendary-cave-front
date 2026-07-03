@@ -111,4 +111,3 @@ Les contributions sont bienvenues ! N'hésitez pas à ouvrir une issue ou une pu
 ## Licence
 
 Ce projet est licencié sous la Licence MIT.
-git add
