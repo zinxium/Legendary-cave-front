@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, MapPin, Mail, User } from 'lucide-react';
+import { X, MapPin, Mail } from 'lucide-react';
 import { C } from '../tokens';
 
 const specialtyColors = {
