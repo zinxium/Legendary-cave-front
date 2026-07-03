@@ -28,7 +28,6 @@ export const ALUMNI = [
   { id: 25, name: "Hodavia Bangbola", role: "Security Engineer", company: "IBM", location: "Cotonou, Bénin", domain: "Cybersécurité", specialty: "Cybersécurité", available: false },
   { id: 26, name: "Horace Kougbla", role: "ML Engineer", company: "Meta", location: "Cotonou, Bénin", domain: "Intelligence Artificielle", specialty: "IA", available: true },
   { id: 27, name: "Houcham Mama-Gao", role: "Cloud Architect", company: "Microsoft Azure", location: "Cotonou, Bénin", domain: "DevOps", specialty: "DevOps", available: true },
-  { id: 28, name: "Houefa Tessilimi", role: "Software Engineer", company: "Google", location: "Cotonou, Bénin", domain: "Développement Web", specialty: "Web", available: true },
   { id: 29, name: "Ilham Adios", role: "Frontend Engineer", company: "Figma", location: "Cotonou, Bénin", domain: "UX/UI Design", specialty: "UX/UI Design", available: true },
   { id: 30, name: "Jaures Adehossi", role: "Data Scientist", company: "Criteo", location: "Cotonou, Bénin", domain: "Data Science", specialty: "Data Science", available: true },
   { id: 31, name: "Jaures Agossou", role: "DevOps Engineer", company: "OVHcloud", location: "Cotonou, Bénin", domain: "DevOps", specialty: "DevOps", available: true },
@@ -62,25 +61,7 @@ export const ALUMNI = [
   { id: 59, name: "Sylvanus Boni", role: "Cloud Architect", company: "Microsoft Azure", location: "Cotonou, Bénin", domain: "DevOps", specialty: "DevOps", available: false },
   { id: 60, name: "Ted Dossou-Koko", role: "ML Engineer", company: "Meta", location: "Cotonou, Bénin", domain: "Intelligence Artificielle", specialty: "IA", available: true },
   { id: 61, name: "Theodoric Akpaca", role: "Data Scientist", company: "Criteo", location: "Cotonou, Bénin", domain: "Data Science", specialty: "Data Science", available: true },
-  { id: 62, name: "Wilfred Marcos", role: "Fullstack Developer", company: "Stripe", location: "Cotonou, Bénin", domain: "Développement Web", specialty: "Web", available: true },
   { id: 63, name: "Yann-Meric Sossou", role: "DevOps Engineer", company: "OVHcloud", location: "Cotonou, Bénin", domain: "DevOps", specialty: "DevOps", available: true },
   { id: 64, name: "Yoann Dossou-Yovo", role: "Security Engineer", company: "IBM", location: "Cotonou, Bénin", domain: "Cybersécurité", specialty: "Cybersécurité", available: true },
   { id: 65, name: "Youvel Vibou", role: "Software Engineer", company: "Freelance", location: "Cotonou, Bénin", domain: "Mobile Dev", specialty: "Mobile Dev", available: true }
-];
-
-export const SPECIALTIES = [
-  'Intelligence Artificielle',
-  'Développement Web',
-  'Cybersécurité',
-  'Data Science',
-  'DevOps',
-  'UX/UI Design',
-  'Mobile Dev'
-];
-
-export const STATS = [
-  { label: "Alumni", value: "65", suffix: "" },
-  { label: "Domaines", value: "7", suffix: "" },
-  { label: "Pays", value: "1", suffix: "" },
-  { label: "Promotion", value: "2027", suffix: "" },
 ];
