@@ -1,5 +1,36 @@
 # Changelog - Legendary Cave Frontend
 
+## [Version 3.0.0] - 2026-07-03
+
+### Photos dynamiques depuis Cloudinary
+- Les photos ne sont plus en dur dans le code
+- Chargement dynamique via le backend (`GET /api/photos/souvenirs`)
+- Homepage hero carousel et preview cards alimentes par l'API
+- Galerie photos alimentee par l'API
+- Fallback gracieux si le backend est indisponible (loading state + message)
+- Ajout du state `loadingPhotos` avec indicateur "Chargement des photos..."
+
+### Migration Cloudinary
+- Ancien compte `dkpacwzgb` remplace par `dnusjylvv`
+- Toutes les images organisees dans `Legendary-cave/souvenir` et `Legendary-cave/cave-profile`
+- Plus aucune URL Cloudinary en dur dans le code source
+
+### API Service
+- Nouveau `getSouvenirs()` — charge les photos souvenirs depuis le backend
+- Nouveau `getProfiles()` — charge les photos de profil alumni
+- Nouveau `getAlumni()` — charge les donnees alumni depuis le backend
+- Suppression de l'ancien `getHello()`
+
+### Bug Fixes
+- Bouton "En savoir plus" naviguait vers `/galerie` au lieu de `/about` — corrige
+- Tokens de design extraits dans `src/tokens.js` (refactoring)
+
+### Securite
+- Credentials Cloudinary retires du `.env` frontend (uniquement cote backend)
+- Le `.env` frontend ne contient plus que `REACT_APP_API_URL`
+
+---
+
 ## [Version 2.0.0] - 2026-03-11
 
 ### Design & UI Improvements
@@ -225,5 +256,5 @@ Community Spirit: Every photo tells a story of growth, collaboration, and excell
 
 ---
 
-Last Updated: March 11, 2026
-Version: 2.0.0 - Complete Career & Gallery Platform
+Last Updated: July 3, 2026
+Version: 3.0.0 - Dynamic Cloudinary Integration & API-driven Gallery

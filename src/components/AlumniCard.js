@@ -1,26 +1,30 @@
 import React, { useState } from 'react';
 
 const specialtyColors = {
-  "Intelligence Artificielle": { bg: "#a486d5", text: "#1f1233" },
-  "Développement Web": { bg: "#ffcc00", text: "#221438" },
-  "Cybersécurité": { bg: "#54318c", text: "#ffeb99" },
-  "Data Science": { bg: "#ffde5c", text: "#221438" },
-  "DevOps": { bg: "#7042bb", text: "#ffe066" },
+  "IA":             { bg: "#4a8abf", text: "#001229" },
+  "Web":            { bg: "#ffcc00", text: "#002147" },
+  "Cybersécurité":  { bg: "#003262", text: "#ffeb99" },
+  "Data Science":   { bg: "#ffde5c", text: "#002147" },
+  "DevOps":         { bg: "#004080", text: "#ffe066" },
+  "UX/UI Design":   { bg: "#9b59b6", text: "#fff" },
+  "Mobile Dev":     { bg: "#e67e22", text: "#fff" },
 };
 
 const colorMap = {
-  byzantium: "#a486d5",
-  dogwood_rose: "#d946a6",
+  byzantium: "#4a8abf",
+  dogwood_rose: "#4a8abf",
   gold: "#ffcc00",
-  space_cadet: "#54318c"
+  space_cadet: "#003262"
 };
 
 const AlumniCard = ({ alumni, onClick }) => {
   const [hovered, setHovered] = useState(false);
-  const spec = specialtyColors[alumni.domain] || { bg: "#54318c", text: "#ffeb99" };
-  const color = colorMap[alumni.color] || "#a486d5";
+  const [imgError, setImgError] = useState(false);
+  const spec = specialtyColors[alumni.specialty] || { bg: "#003262", text: "#ffeb99" };
+  const color = colorMap[alumni.color] || "#4a8abf";
   const isGold = color === "#ffcc00";
   const initials = alumni.name.split(' ').map(n => n[0]).join('').toUpperCase();
+  const hasPhoto = alumni.photo && !imgError;
 
   return (
     <div
@@ -30,13 +34,9 @@ const AlumniCard = ({ alumni, onClick }) => {
       className="relative overflow-hidden rounded-xl p-6 cursor-pointer transition-all duration-300"
       style={{
         background: hovered
-          ? 'linear-gradient(135deg, rgba(84,49,140,0.6), rgba(34,20,56,0.9))'
-          : 'rgba(34,20,56,0.7)',
-        border: hovered ? '1px solid rgba(255,204,0,0.5)' : '1px solid rgba(164,134,213,0.2)',
-        transform: hovered ? 'translateY(-4px)' : 'none',
-        boxShadow: hovered
-          ? '0 20px 40px rgba(84,49,140,0.4), 0 0 0 1px rgba(255,204,0,0.15)'
-          : 'none',
+          ? 'rgba(0,50,98,0.6)'
+          : 'rgba(0,33,71,0.7)',
+        border: hovered ? '1px solid rgba(255,204,0,0.5)' : '1px solid rgba(74,138,191,0.2)',
       }}
     >
       {/* Availability dot */}
@@ -47,23 +47,37 @@ const AlumniCard = ({ alumni, onClick }) => {
         }}
       />
 
-      {/* Avatar */}
-      <div
-        className="w-14 h-14 rounded-full flex items-center justify-center mb-4 text-lg font-bold"
-        style={{
-          fontFamily: "'Playfair Display', serif",
-          background: `radial-gradient(circle at 35% 35%, ${color}cc, ${color}44)`,
-          border: `2px solid ${color}66`,
-          color: isGold ? '#221438' : '#ffeb99',
-        }}
-      >
-        {initials}
-      </div>
+      {/* Avatar / Photo */}
+      {hasPhoto ? (
+        <div
+          className="w-14 h-14 rounded-full mb-4 overflow-hidden"
+          style={{ border: `2px solid ${color}66` }}
+        >
+          <img
+            src={alumni.photo}
+            alt={alumni.name}
+            onError={() => setImgError(true)}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ) : (
+        <div
+          className="w-14 h-14 rounded-full flex items-center justify-center mb-4 text-lg font-bold"
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            background: `${color}88`,
+            border: `2px solid ${color}66`,
+            color: isGold ? '#002147' : '#ffeb99',
+          }}
+        >
+          {initials}
+        </div>
+      )}
 
       {/* Name */}
       <div
         className="font-bold text-base mb-0.5"
-        style={{ fontFamily: "'Playfair Display', serif", color: '#ffeb99' }}
+        style={{ fontFamily: "'Cormorant Garamond', serif", color: '#ffeb99' }}
       >
         {alumni.name}
       </div>
@@ -76,25 +90,25 @@ const AlumniCard = ({ alumni, onClick }) => {
         {alumni.role}
       </div>
 
-      {/* Company · Location */}
+      {/* Company | Location */}
       <div
         className="text-xs mb-4"
-        style={{ fontFamily: "'DM Mono', monospace", color: 'rgba(164,134,213,0.7)' }}
+        style={{ fontFamily: "'DM Sans', sans-serif", color: 'rgba(74,138,191,0.7)' }}
       >
-        {alumni.company} · {alumni.location}
+        {alumni.company} | {alumni.location}
       </div>
 
       {/* Specialty badge */}
       <div
         className="inline-flex items-center rounded-full px-3 py-0.5 text-xs uppercase tracking-widest"
         style={{
-          fontFamily: "'DM Mono', monospace",
+          fontFamily: "'DM Sans', sans-serif",
           background: spec.bg + '33',
           border: `1px solid ${spec.bg}55`,
           color: spec.bg,
         }}
       >
-        {alumni.domain}
+        {alumni.specialty}
       </div>
     </div>
   );
