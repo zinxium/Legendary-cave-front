@@ -1,155 +1,57 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Users, Camera, Heart, Star, ArrowRight, ChevronDown } from "lucide-react";
+import { Users, Camera, Heart, Star, ArrowRight } from "lucide-react";
+import { C } from '../tokens';
+import { getSouvenirs } from '../services/apiService';
 
-/* ─── TOKENS ─────────────────────────── */
-const C = {
-  amber:    '#ffcc00',
-  mustard:  '#ffde5c',
-  gold:     '#ffeb99',
-  lavender: '#a486d5',
-  indigo:   '#54318c',
-  deep:     '#110a1c',
-  mid:      '#1c1030',
-  surface:  '#221438',
-};
-
-const GlowOrb = ({ style }) => (
-  <div style={{ position:'absolute', borderRadius:'50%', filter:'blur(100px)', pointerEvents:'none', ...style }} />
-);
-
-const useReveal = (threshold = 0.15) => {
-  const ref = useRef(null);
-  const [vis, setVis] = useState(false);
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVis(true); }, { threshold });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return [ref, vis];
-};
-
-/* ─── ANIMATED COUNTER ───────────────── */
-function Counter({ target, suffix = '' }) {
-  const [val, setVal] = useState(0);
-  const ref = useRef(null);
-  const [started, setStarted] = useState(false);
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setStarted(true); }, { threshold: 0.5 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-  useEffect(() => {
-    if (!started || typeof target !== 'number') return;
-    let frame;
-    const duration = 1400;
-    const start = performance.now();
-    const tick = now => {
-      const p = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      setVal(Math.round(ease * target));
-      if (p < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [started, target]);
-  return <span ref={ref}>{typeof target === 'number' ? val : target}{suffix}</span>;
-}
-
-/* ─── HERO IMAGES ────────────────────── */
-const HERO_IMAGES = [
-  "https://res.cloudinary.com/dkpacwzgb/image/upload/v1773231607/db8f2e19a2914f238dda524c2317f4b5_nmpxhh.jpg",
-  "https://res.cloudinary.com/dkpacwzgb/image/upload/v1773231606/FB_IMG_1730070701137_hf7wqy.jpg",
-  "https://res.cloudinary.com/dkpacwzgb/image/upload/v1773231606/2bcb60453e6840a0bd1aedc375a2ba07_iaagsb.jpg",
-];
-
-const PREVIEW_ITEMS = [
-  {
-    url:   "https://res.cloudinary.com/dkpacwzgb/image/upload/v1773231607/db8f2e19a2914f238dda524c2317f4b5_nmpxhh.jpg",
-    title: "Moments d'étude",
-    desc:  "Sessions de travail intenses et collaboration",
-    accent: C.lavender,
-  },
-  {
-    url:   "https://res.cloudinary.com/dkpacwzgb/image/upload/v1773231606/FB_IMG_1730070701137_hf7wqy.jpg",
-    title: "Événements spéciaux",
-    desc:  "Célébrations et accomplissements",
-    accent: C.amber,
-  },
-  {
-    url:   "https://res.cloudinary.com/dkpacwzgb/image/upload/v1773231606/2bcb60453e6840a0bd1aedc375a2ba07_iaagsb.jpg",
-    title: "Vie étudiante",
-    desc:  "Détente et amitié au quotidien",
-    accent: C.mustard,
-  },
+const PREVIEW_LABELS = [
+  { title: "Moments d'étude",      desc: "Sessions de travail intenses et collaboration", accent: C.lavender },
+  { title: "Événements spéciaux",   desc: "Célébrations et accomplissements",              accent: C.amber },
+  { title: "Vie étudiante",         desc: "Détente et amitié au quotidien",                accent: C.mustard },
 ];
 
 const STATS = [
-  { icon: Users,  value: 65,      suffix: '+', label: 'Étudiants',  accent: C.amber },
+  { icon: Users,  value: 63,      suffix: '+', label: 'Etudiants',  accent: C.amber },
   { icon: Camera, value: 100,     suffix: '+', label: 'Photos',     accent: C.lavender },
-  { icon: Heart,  value: '∞',     suffix: '',  label: 'Souvenirs',  accent: C.mustard },
+  { icon: Heart,  value: '-',     suffix: '',  label: 'Souvenirs',  accent: C.mustard },
   { icon: Star,   value: '2027',  suffix: '',  label: 'Promotion',  accent: C.indigo },
 ];
 
 /* ─── PREVIEW CARD ───────────────────── */
-function PreviewCard({ item, index }) {
-  const [ref, vis] = useReveal();
-  const [hovered, setHovered] = useState(false);
+function PreviewCard({ item }) {
   return (
-    <div ref={ref} style={{
-      opacity: vis ? 1 : 0,
-      transform: vis ? 'none' : 'translateY(40px)',
-      transition: `opacity 0.7s ease ${index * 0.15}s, transform 0.7s ease ${index * 0.15}s`,
+    <div style={{
+      background: 'rgba(0,33,71,0.7)',
+      border: '1px solid rgba(74,138,191,0.15)',
+      borderRadius: 16, overflow: 'hidden', cursor: 'pointer',
+      transition: 'opacity 0.3s ease',
     }}>
-      <div
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          background: 'rgba(34,20,56,0.7)',
-          border: hovered ? `1px solid ${item.accent}55` : '1px solid rgba(164,134,213,0.15)',
-          borderRadius: 20, overflow: 'hidden', cursor: 'pointer',
-          transition: 'all 0.35s ease',
-          transform: hovered ? 'translateY(-6px)' : 'none',
-          boxShadow: hovered ? `0 24px 48px rgba(0,0,0,0.4), 0 0 0 1px ${item.accent}22` : 'none',
-        }}
-      >
-        {/* Image */}
-        <div style={{ position: 'relative', height: 220, overflow: 'hidden' }}>
-          <img src={item.url} alt={item.title} style={{
-            width: '100%', height: '100%', objectFit: 'cover',
-            transform: hovered ? 'scale(1.06)' : 'scale(1)',
-            transition: 'transform 0.6s ease',
-            filter: hovered ? 'brightness(0.85)' : 'brightness(0.7)',
-          }} />
-          {/* Gradient overlay */}
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: `linear-gradient(to top, ${C.deep}cc, transparent 50%)`,
-          }} />
-          {/* Accent top bar */}
-          <div style={{
-            position: 'absolute', top: 0, left: 0, right: 0, height: 3,
-            background: `linear-gradient(90deg, ${item.accent}, transparent)`,
-            opacity: hovered ? 1 : 0, transition: 'opacity 0.3s',
-          }} />
-        </div>
+      {/* Image */}
+      <div style={{ position: 'relative', height: 220, overflow: 'hidden' }}>
+        <img src={item.url} alt={item.title} style={{
+          width: '100%', height: '100%', objectFit: 'cover',
+          filter: 'brightness(0.7)',
+        }} />
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: `${C.deep}cc`,
+        }} />
+      </div>
 
-        {/* Content */}
-        <div style={{ padding: '1.5rem' }}>
-          <div style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: '1.3rem', fontWeight: 700, color: C.gold, marginBottom: 6,
-          }}>{item.title}</div>
-          <div style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.85rem', color: 'rgba(255,235,153,0.5)', lineHeight: 1.6,
-          }}>{item.desc}</div>
-          <div style={{
-            width: hovered ? 48 : 24, height: 2, borderRadius: 2, marginTop: 16,
-            background: `linear-gradient(90deg, ${item.accent}, transparent)`,
-            transition: 'width 0.3s ease',
-          }} />
-        </div>
+      {/* Content */}
+      <div style={{ padding: '1.5rem' }}>
+        <div style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: '1.3rem', fontWeight: 700, color: C.gold, marginBottom: 6,
+        }}>{item.title}</div>
+        <div style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: '0.85rem', color: 'rgba(255,235,153,0.5)', lineHeight: 1.6,
+        }}>{item.desc}</div>
+        <div style={{
+          width: 24, height: 2, borderRadius: 2, marginTop: 16,
+          background: item.accent, opacity: 0.4,
+        }} />
       </div>
     </div>
   );
@@ -158,35 +60,38 @@ function PreviewCard({ item, index }) {
 /* ─── MAIN ───────────────────────────── */
 export default function Homepage() {
   const navigate = useNavigate();
-  const [mounted, setMounted]           = useState(false);
-  const [imgIndex, setImgIndex]         = useState(0);
-  const [previewRef, previewVis]        = useReveal(0.1);
+  const [mounted, setMounted]   = useState(false);
+  const [imgIndex, setImgIndex] = useState(0);
+  const [heroImages, setHeroImages] = useState([]);
+  const [previewItems, setPreviewItems] = useState([]);
 
   useEffect(() => {
+    getSouvenirs().then(data => {
+      const urls = data.map(p => p.src);
+      setHeroImages(urls.slice(0, 3));
+      setPreviewItems(
+        urls.slice(0, 3).map((url, i) => ({
+          url,
+          ...(PREVIEW_LABELS[i] || { title: `Photo ${i + 1}`, desc: '', accent: C.lavender }),
+        }))
+      );
+    }).catch(() => {});
     const t = setTimeout(() => setMounted(true), 80);
-    const iv = setInterval(() => setImgIndex(p => (p + 1) % HERO_IMAGES.length), 6000);
-    return () => { clearTimeout(t); clearInterval(iv); };
+    return () => clearTimeout(t);
   }, []);
 
-  const scrollTo = id => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
+  useEffect(() => {
+    if (heroImages.length === 0) return;
+    const iv = setInterval(() => setImgIndex(p => (p + 1) % heroImages.length), 6000);
+    return () => clearInterval(iv);
+  }, [heroImages]);
 
   return (
     <div style={{
       background: C.deep, minHeight: '100vh', color: C.gold,
       fontFamily: "'DM Sans', sans-serif", overflowX: 'hidden',
     }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Syne+Mono&family=DM+Sans:wght@400;500;600&display=swap');
-        * { margin:0; padding:0; box-sizing:border-box; }
-        ::-webkit-scrollbar { width:4px; }
-        ::-webkit-scrollbar-track { background:${C.deep}; }
-        ::-webkit-scrollbar-thumb { background:${C.indigo}; border-radius:2px; }
-        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-        @keyframes fadeSlide { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
-        @keyframes pulse-ring { 0%{box-shadow:0 0 0 0 rgba(255,204,0,0.4)} 70%{box-shadow:0 0 0 20px rgba(255,204,0,0)} 100%{box-shadow:0 0 0 0 rgba(255,204,0,0)} }
-      `}</style>
+      <style>{'@keyframes fadeSlide { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }'}</style>
 
       {/* ══════════════════════════════
           HERO
@@ -194,7 +99,7 @@ export default function Homepage() {
       <section id="hero" style={{ position: 'relative', minHeight: '100vh', paddingTop: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
 
         {/* Carousel background */}
-        {HERO_IMAGES.map((img, i) => (
+        {heroImages.map((img, i) => (
           <div key={i} style={{
             position: 'absolute', inset: 0, zIndex: 0,
             opacity: i === imgIndex ? 1 : 0,
@@ -208,24 +113,12 @@ export default function Homepage() {
         {/* Dark veil + color tint */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 1,
-          background: `linear-gradient(135deg, rgba(17,10,28,0.7) 0%, rgba(84,49,140,0.4) 50%, rgba(17,10,28,0.8) 100%)`,
-        }} />
-
-        {/* Ambient orbs */}
-        <GlowOrb style={{ zIndex:1, width:700, height:700, top:'-20%', left:'50%', transform:'translateX(-50%)', background:`radial-gradient(circle, ${C.indigo}55 0%, transparent 65%)` }} />
-        <GlowOrb style={{ zIndex:1, width:300, height:300, bottom:'10%', left:'5%', background:`radial-gradient(circle, ${C.amber}22 0%, transparent 65%)` }} />
-        <GlowOrb style={{ zIndex:1, width:280, height:280, top:'20%', right:'5%', background:`radial-gradient(circle, ${C.lavender}30 0%, transparent 65%)` }} />
-
-        {/* Grain texture */}
-        <div style={{
-          position: 'absolute', inset: 0, zIndex: 2, opacity: 0.04, pointerEvents: 'none',
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
-          backgroundSize: '200px',
+          background: 'rgba(0,18,41,0.75)',
         }} />
 
         {/* Hero content */}
         <div style={{
-          position: 'relative', zIndex: 3, textAlign: 'center',
+          position: 'relative', zIndex: 2, textAlign: 'center',
           padding: '0 2rem', maxWidth: 900,
           opacity: mounted ? 1 : 0, transform: mounted ? 'none' : 'translateY(30px)',
           transition: 'opacity 1.2s ease 0.1s, transform 1.2s ease 0.1s',
@@ -233,14 +126,13 @@ export default function Homepage() {
           {/* Badge */}
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
-            background: 'rgba(84,49,140,0.35)', border: '1px solid rgba(164,134,213,0.4)',
+            background: 'rgba(0,50,98,0.35)', border: '1px solid rgba(74,138,191,0.4)',
             borderRadius: 100, padding: '7px 22px', marginBottom: '2.5rem',
-            fontFamily: "'Syne Mono', monospace", fontSize: '0.7rem',
-            letterSpacing: '0.18em', textTransform: 'uppercase', color: C.lavender,
+            fontFamily: "'DM Sans', sans-serif", fontSize: '0.7rem',
+            letterSpacing: '0.05em', textTransform: 'uppercase', color: C.lavender,
             animation: mounted ? 'fadeSlide 0.8s ease 0.3s both' : 'none',
           }}>
-            {/* <span style={{ width:6, height:6, borderRadius:'50%', background: C.amber, display:'inline-block', animation:'pulse-ring 2s infinite' }} /> */}
-            Promotion 2022 — 2027
+            Promotion 2022 - 2027
           </div>
 
           {/* Main title */}
@@ -252,15 +144,9 @@ export default function Homepage() {
             width: '100%', overflow: 'visible', wordBreak: 'break-word',
           }}>
             <span style={{
-              background: `linear-gradient(135deg, ${C.gold} 0%, ${C.amber} 45%, ${C.mustard} 100%)`,
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+              color: C.amber,
               display: 'block',
-            }}>Legendary</span>
-            <span style={{
-              fontStyle: 'italic',
-              color: C.lavender,
-              display: 'block',
-            }}>Cave</span>
+            }}>Cave27</span>
           </h1>
 
           {/* Divider */}
@@ -269,8 +155,8 @@ export default function Homepage() {
             marginBottom: '1.8rem',
             animation: mounted ? 'fadeSlide 0.9s ease 0.7s both' : 'none',
           }}>
-            <div style={{ width: 60, height: 1, background: `linear-gradient(90deg, transparent, ${C.amber})` }} />
-            <div style={{ width: 60, height: 1, background: `linear-gradient(90deg, ${C.amber}, transparent)` }} />
+            <div style={{ width: 60, height: 1, background: C.amber, opacity: 0.4 }} />
+            <div style={{ width: 60, height: 1, background: C.amber, opacity: 0.4 }} />
           </div>
 
           {/* Subtitle */}
@@ -283,12 +169,12 @@ export default function Homepage() {
             Notre parcours étudiant immortalisé en images
           </p>
           <p style={{
-            fontFamily: "'Syne Mono', monospace",
-            fontSize: '0.78rem', letterSpacing: '0.2em', textTransform: 'uppercase',
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '0.85rem', letterSpacing: '0.05em',
             color: C.amber, marginBottom: '3.5rem',
             animation: mounted ? 'fadeSlide 0.9s ease 0.9s both' : 'none',
           }}>
-            Souvenirs · Amitié · Challenges
+            Souvenirs, Amitie, Challenges
           </p>
 
           {/* CTA */}
@@ -299,31 +185,23 @@ export default function Homepage() {
           }}>
             <button onClick={() => navigate('/galerie')} style={{
               display: 'flex', alignItems: 'center', gap: 10,
-              background: `linear-gradient(135deg, ${C.amber}, ${C.mustard})`,
+              background: C.amber,
               color: C.deep, border: 'none', cursor: 'pointer',
-              fontFamily: "'Syne Mono', monospace", fontSize: '0.78rem',
-              fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase',
+              fontFamily: "'DM Sans', sans-serif", fontSize: '0.85rem',
+              fontWeight: 600, letterSpacing: '0.03em',
               padding: '14px 32px', borderRadius: 6,
-              boxShadow: `0 0 40px ${C.amber}44`,
-              transition: 'transform 0.2s, box-shadow 0.2s',
-            }}
-              onMouseEnter={e => { e.currentTarget.style.transform='scale(1.04)'; e.currentTarget.style.boxShadow=`0 0 50px ${C.amber}66`; }}
-              onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow=`0 0 40px ${C.amber}44`; }}
-            >
+              transition: 'opacity 0.2s',
+            }}>
               Explorer la Galerie <ArrowRight size={14} />
             </button>
-            <button onClick={() => scrollTo('preview')} style={{
+            <button onClick={() => navigate('/about')} style={{
               display: 'flex', alignItems: 'center', gap: 10,
               background: 'transparent',
               color: C.gold, border: '1px solid rgba(255,235,153,0.25)', cursor: 'pointer',
-              fontFamily: "'Syne Mono', monospace", fontSize: '0.78rem',
-              letterSpacing: '0.12em', textTransform: 'uppercase',
+              fontFamily: "'DM Sans', sans-serif", fontSize: '0.85rem',
               padding: '14px 32px', borderRadius: 6,
-              transition: 'all 0.2s',
-            }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor=`rgba(255,235,153,0.5)`; e.currentTarget.style.background='rgba(255,255,255,0.04)'; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,235,153,0.25)'; e.currentTarget.style.background='transparent'; }}
-            >
+              transition: 'opacity 0.2s',
+            }}>
               En savoir plus
             </button>
           </div>
@@ -341,18 +219,17 @@ export default function Homepage() {
                   padding: '1.2rem 1.8rem',
                   background: 'rgba(255,255,255,0.04)',
                   border: '1px solid rgba(255,255,255,0.08)',
-                  borderRadius: 16, backdropFilter: 'blur(8px)', minWidth: 100,
+                  borderRadius: 16, minWidth: 100,
                 }}>
                   <Icon size={18} color={s.accent} style={{ marginBottom: 8 }} />
                   <div style={{
                     fontFamily: "'Cormorant Garamond', serif",
                     fontSize: '2rem', fontWeight: 700, lineHeight: 1, color: s.accent,
                   }}>
-                    <Counter target={s.value} suffix={s.suffix} />
+                    {s.value}{s.suffix}
                   </div>
                   <div style={{
-                    fontFamily: "'Syne Mono', monospace", fontSize: '0.6rem',
-                    letterSpacing: '0.14em', textTransform: 'uppercase',
+                    fontFamily: "'DM Sans', sans-serif", fontSize: '0.7rem',
                     color: 'rgba(255,235,153,0.35)', marginTop: 6,
                   }}>{s.label}</div>
                 </div>
@@ -361,30 +238,17 @@ export default function Homepage() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div style={{
-          position: 'absolute', bottom: '2.5rem', left: '50%', transform: 'translateX(-50%)',
-          zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
-          opacity: mounted ? 0.5 : 0, transition: 'opacity 1s ease 1.5s',
-          // animation: 'float 2.5s ease-in-out infinite',
-          cursor: 'pointer',
-        }} onClick={() => scrollTo('preview')}>
-          <span style={{ fontFamily: "'Syne Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: C.gold }}>Découvrir</span>
-          <ChevronDown size={16} color={C.amber} />
-        </div>
-
         {/* Carousel dots */}
         <div style={{
-          position: 'absolute', bottom: '2.5rem', right: '3rem', zIndex: 3,
+          position: 'absolute', bottom: '2.5rem', right: '3rem', zIndex: 2,
           display: 'flex', gap: 8,
         }}>
-          {HERO_IMAGES.map((_, i) => (
+          {heroImages.map((_, i) => (
             <button key={i} onClick={() => setImgIndex(i)} style={{
               width: i === imgIndex ? 24 : 6, height: 6, borderRadius: 3,
               background: i === imgIndex ? C.amber : 'rgba(255,255,255,0.2)',
               border: 'none', cursor: 'pointer', padding: 0,
               transition: 'all 0.4s ease',
-              boxShadow: i === imgIndex ? `0 0 8px ${C.amber}88` : 'none',
             }} />
           ))}
         </div>
@@ -393,36 +257,27 @@ export default function Homepage() {
       {/* ══════════════════════════════
           PREVIEW SECTION
       ══════════════════════════════ */}
-      <section id="preview" style={{ padding: '7rem 3rem', position: 'relative', overflow: 'hidden' }}>
-        <GlowOrb style={{ width:500, height:500, top:0, left:'50%', transform:'translateX(-50%)', background:`radial-gradient(circle, ${C.indigo}35 0%, transparent 65%)` }} />
-        <GlowOrb style={{ width:300, height:300, bottom:'10%', right:'-5%', background:`radial-gradient(circle, ${C.amber}15 0%, transparent 65%)` }} />
-
+      <section id="preview" style={{ padding: '5rem 3rem', position: 'relative', overflow: 'hidden' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative' }}>
           {/* Section header */}
-          <div ref={previewRef} style={{
-            textAlign: 'center', marginBottom: '4rem',
-            opacity: previewVis ? 1 : 0, transform: previewVis ? 'none' : 'translateY(30px)',
-            transition: 'opacity 0.8s ease, transform 0.8s ease',
-          }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <div style={{
-              fontFamily: "'Syne Mono', monospace", fontSize: '0.7rem',
-              letterSpacing: '0.2em', textTransform: 'uppercase',
+              fontFamily: "'DM Sans', sans-serif", fontSize: '0.75rem',
+              letterSpacing: '0.05em',
               color: C.amber, marginBottom: '1.2rem',
-            }}>— Un aperçu</div>
+            }}>Un apercu</div>
             <h2 style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 700, lineHeight: 1.0,
               letterSpacing: '-0.02em', marginBottom: '1.5rem',
             }}>
               <span style={{
-                background: `linear-gradient(135deg, ${C.gold}, ${C.amber})`,
-                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+                color: C.amber,
               }}>Un aperçu de</span>
               <br />
               <span style={{
                 fontStyle: 'italic',
-                background: `linear-gradient(90deg, ${C.lavender}, ${C.indigo} 60%, ${C.amber})`,
-                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+                color: C.lavender,
               }}>notre aventure</span>
             </h2>
             <p style={{
@@ -434,9 +289,8 @@ export default function Homepage() {
             </p>
 
             <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:16, marginTop:'2rem' }}>
-              <div style={{ width:60, height:1, background:`linear-gradient(90deg, transparent, ${C.amber})` }} />
-              <span style={{ color: C.amber }}>✦</span>
-              <div style={{ width:60, height:1, background:`linear-gradient(90deg, ${C.amber}, transparent)` }} />
+              <div style={{ width:60, height:1, background: C.amber, opacity: 0.4 }} />
+              <div style={{ width:60, height:1, background: C.amber, opacity: 0.4 }} />
             </div>
           </div>
 
@@ -445,47 +299,27 @@ export default function Homepage() {
             display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem',
             marginBottom: '3.5rem',
           }}>
-            {PREVIEW_ITEMS.map((item, i) => <PreviewCard key={i} item={item} index={i} />)}
+            {previewItems.map((item, i) => <PreviewCard key={i} item={item} />)}
           </div>
 
           {/* CTA */}
           <div style={{ textAlign: 'center' }}>
             <button onClick={() => navigate('/galerie?section=souvenirs')} style={{
               display: 'inline-flex', alignItems: 'center', gap: 12,
-              background: 'rgba(34,20,56,0.8)',
-              border: `1px solid rgba(164,134,213,0.25)`,
+              background: 'rgba(0,33,71,0.8)',
+              border: '1px solid rgba(74,138,191,0.25)',
               color: C.gold, cursor: 'pointer',
-              fontFamily: "'Syne Mono', monospace", fontSize: '0.76rem',
-              fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase',
+              fontFamily: "'DM Sans', sans-serif", fontSize: '0.85rem',
+              fontWeight: 600,
               padding: '14px 36px', borderRadius: 6,
-              transition: 'all 0.25s',
-            }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor=`${C.amber}66`; e.currentTarget.style.color=C.amber; e.currentTarget.style.boxShadow=`0 0 20px ${C.amber}22`; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(164,134,213,0.25)'; e.currentTarget.style.color=C.gold; e.currentTarget.style.boxShadow='none'; }}
-            >
+              transition: 'opacity 0.25s',
+            }}>
               Voir toute la galerie <ArrowRight size={13} />
             </button>
           </div>
         </div>
       </section>
 
-      {/* ── FOOTER STRIP ─────────────── */}
-      <div style={{
-        borderTop: '1px solid rgba(164,134,213,0.1)',
-        padding: '2rem 3rem',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: 'rgba(0,0,0,0.25)',
-      }}>
-        <div style={{
-          fontFamily: "'Cormorant Garamond', serif",
-          fontStyle: 'italic', color: 'rgba(255,235,153,0.3)', fontSize: '0.9rem',
-        }}>Legendary Cave — Promo 2027</div>
-        <div style={{
-          fontFamily: "'Syne Mono', monospace",
-          fontSize: '0.65rem', letterSpacing: '0.12em', textTransform: 'uppercase',
-          color: 'rgba(164,134,213,0.3)',
-        }}>Made by Zinxium</div>
-      </div>
     </div>
   );
 }
