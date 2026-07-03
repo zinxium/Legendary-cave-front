@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, MapPin, Mail } from 'lucide-react';
+import { X, MapPin, Mail, Linkedin, FolderOpen, ExternalLink } from 'lucide-react';
 import { C } from '../tokens';
 
 const specialtyColors = {
@@ -197,8 +197,63 @@ const AlumniModal = ({ alumni, onClose }) => {
           </span>
         </div>
 
-        {/* Action button */}
+        {/* LinkedIn */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 8,
+          fontFamily: "'DM Sans', sans-serif", fontSize: '0.82rem',
+          color: 'rgba(255,235,153,0.5)', marginBottom: '0.8rem',
+        }}>
+          <Linkedin size={14} color={C.lavender} />
+          {alumni.linkedin ? (
+            <a href={alumni.linkedin} target="_blank" rel="noopener noreferrer" style={{
+              color: C.lavender, textDecoration: 'none',
+              display: 'flex', alignItems: 'center', gap: 4,
+            }}>
+              LinkedIn <ExternalLink size={10} />
+            </a>
+          ) : (
+            <span style={{ color: 'rgba(255,235,153,0.3)', fontStyle: 'italic' }}>A venir</span>
+          )}
+        </div>
+
+        {/* Projets */}
+        <div style={{
+          display: 'flex', alignItems: 'flex-start', gap: 8,
+          fontFamily: "'DM Sans', sans-serif", fontSize: '0.82rem',
+          color: 'rgba(255,235,153,0.5)', marginBottom: '1.5rem',
+        }}>
+          <FolderOpen size={14} color={C.lavender} style={{ marginTop: 2, flexShrink: 0 }} />
+          <span style={{
+            color: alumni.projects && alumni.projects !== 'A venir' ? 'rgba(255,235,153,0.7)' : 'rgba(255,235,153,0.3)',
+            fontStyle: alumni.projects && alumni.projects !== 'A venir' ? 'normal' : 'italic',
+          }}>
+            {alumni.projects || 'A venir'}
+          </span>
+        </div>
+
+        {/* Action buttons */}
         <div style={{ display: 'flex', gap: 10 }}>
+          {alumni.linkedin && (
+            <a
+              href={alumni.linkedin}
+              target="_blank" rel="noopener noreferrer"
+              style={{
+                flex: 1, textAlign: 'center',
+                background: 'rgba(74,138,191,0.15)',
+                border: '1px solid rgba(74,138,191,0.3)',
+                color: C.gold, textDecoration: 'none',
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: '0.78rem', fontWeight: 600,
+                padding: '12px', borderRadius: 8,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
+                transition: 'opacity 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.opacity='0.85'; }}
+              onMouseLeave={e => { e.currentTarget.style.opacity='1'; }}
+            >
+              <Linkedin size={12} /> LinkedIn
+            </a>
+          )}
           <button
             onClick={() => { onClose(); navigate('/contact'); }}
             style={{
